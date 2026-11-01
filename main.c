@@ -39,6 +39,7 @@ bool whiteRookLeftMoved = false, whiteRookRightMoved = false;
 bool blackRookLeftMoved = false, blackRookRightMoved = false;
 
 TTF_Font* font = NULL;
+TTF_Font* gameOverFont = NULL;
 
 int playerTimers[2] = {600, 600};
 Uint32 lastTick = 0;
@@ -739,8 +740,7 @@ void drawUI(int winW, int winH) {
       SDL_Rect bg = {winW / 2 - 200, winH / 2 - 60, 400, 80};
       SDL_RenderFillRect(renderer, &bg);
 
-      TTF_Font* bigFont = TTF_OpenFont("C:\\Windows\\Fonts\\arial.ttf", 48);
-      if (!bigFont) bigFont = font;
+      TTF_Font* bigFont = gameOverFont ? gameOverFont : font;
 
       surf =
           TTF_RenderText_Solid(bigFont, endText, (SDL_Color){255, 215, 0, 255});
@@ -753,7 +753,6 @@ void drawUI(int winW, int winH) {
       SDL_FreeSurface(surf);
       SDL_DestroyTexture(t);
 
-      if (bigFont != font) TTF_CloseFont(bigFont);
 
       drawButton("Restart", winW / 2 - 100, winH / 2 + 40, 200, 50);
    }
@@ -865,6 +864,9 @@ int main(int argc, char* argv[]) {
       printf("Font load failed: %s\n", TTF_GetError());
       return 1;
    }
+
+   // Reuse the larger font instead of opening and closing it every end-screen frame.
+   gameOverFont = TTF_OpenFont("C:\\Windows\\Fonts\\arial.ttf", 48);
 
    srand(time(NULL));
    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -1002,6 +1004,7 @@ int main(int argc, char* argv[]) {
       SDL_RenderPresent(renderer);
    }
 
+   if (gameOverFont) TTF_CloseFont(gameOverFont);
    if (font) TTF_CloseFont(font);
    TTF_Quit();
    SDL_DestroyRenderer(renderer);
