@@ -1,0 +1,3 @@
+# Local compiler output; bundled SDL libraries and assets remain tracked.
+/chess.exe
+*.o
