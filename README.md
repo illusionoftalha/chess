@@ -64,8 +64,11 @@ A fully-featured chess game implementation using SDL2 with graphical interface, 
 ## Compilation
 
 ```bash
-gcc main.c -o chess.exe -ID:\chess\SDL\include\SDL2 -ID:\chess\SDL_image\include\SDL2 -ID:\chess\SDL_ttf\include\SDL2 -LD:\chess\SDL\lib -LD:\chess\SDL_image\lib -LD:\chess\SDL_ttf\lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
+gcc main.c -o chess.exe -ISDL/include/SDL2 -ISDL_image/include/SDL2 -ISDL_ttf/include/SDL2 -LSDL/lib -LSDL_image/lib -LSDL_ttf/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 ```
+
+Run the command from the repository root. The executable is generated locally;
+keep the bundled DLLs and assets beside it when running.
 
 Or using Visual Studio, create a new project and:
 
